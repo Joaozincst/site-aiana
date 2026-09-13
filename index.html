@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AM Studio Barbearia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#topo" class="brand">
+      <img src="logo.png" alt="AM Studio Barbearia" class="brand__logo">
+      <span class="brand__text">
+        <strong>AM Studio</strong>
+        <small>Barbearia</small>
+      </span>
+    </a>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      <a href="#topo" class="nav__link">Início</a>
+      <a href="#servicos" class="nav__link">Serviços</a>
+      <a href="#agendamento" class="nav__link">Agendamento</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="topo">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <p class="hero__kicker">Tradição, técnica e estilo</p>
+      <h1 class="hero__title">A barbearia que valoriza <em>cada detalhe</em> do seu visual.</h1>
+      <p class="hero__desc">Cortes precisos, barba bem cuidada e um atendimento pensado para quem não abre mão de estar sempre impecável.</p>
+
+      <div class="hero__hours">
+        <span class="hero__hours-label">Funcionamento</span>
+        <span class="hero__hours-value">Terça a Sábado · 9h às 18h</span>
+      </div>
+
+      <a href="#agendamento" class="btn btn--primary">Agendar horário</a>
+    </div>
+
+    <div class="hero__emblem" aria-hidden="true">
+      <div class="emblem">
+        <img src="logo.png" alt="" class="emblem__logo">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Serviços -->
+<section class="services" id="servicos">
+  <div class="container">
+    <p class="section__kicker">Tabela de valores</p>
+    <h2 class="section__title">Serviços</h2>
+
+    <div class="services__grid">
+
+      <div class="card">
+        <h3 class="card__title">Corte Degradê / Tesoura</h3>
+        <p class="card__desc">Acabamento técnico com máquina e tesoura, moldado ao seu estilo.</p>
+        <span class="card__price">R$ 30</span>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">Corte Simples</h3>
+        <p class="card__desc">Máquina com pente único, prático e sempre alinhado.</p>
+        <span class="card__price">R$ 20</span>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">Barba</h3>
+        <p class="card__desc">Modelagem completa com toalha quente e navalha.</p>
+        <span class="card__price">R$ 15</span>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">Sobrancelha</h3>
+        <p class="card__desc">Design que equilibra e valoriza a expressão do rosto.</p>
+        <span class="card__price">R$ 10</span>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">Pézinho</h3>
+        <p class="card__desc">Acabamento rápido para manter o corte sempre em dia.</p>
+        <span class="card__price">R$ 10</span>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">Pigmentação</h3>
+        <p class="card__desc">Realça falhas e uniformiza barba ou cabelo.</p>
+        <span class="card__price">R$ 10</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Agendamento -->
+<section class="booking" id="agendamento">
+  <div class="container booking__grid">
+    <div class="booking__intro">
+      <p class="section__kicker">Reserve seu horário</p>
+      <h2 class="section__title">Agendamento</h2>
+      <p class="booking__text">Preencha os dados abaixo e confirme direto pelo WhatsApp. É rápido e sem complicação.</p>
+    </div>
+
+    <form class="form" id="form">
+      <div class="form__field">
+        <label for="nome">Nome do cliente</label>
+        <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+      </div>
+
+      <div class="form__field">
+        <label for="servico">Serviço</label>
+        <select id="servico" name="servico" required>
+          <option value="" disabled selected>Selecione um serviço</option>
+          <option value="Corte Degradê / Tesoura (R$30)">Corte Degradê / Tesoura — R$30</option>
+          <option value="Corte Simples (R$20)">Corte Simples — R$20</option>
+          <option value="Barba (R$15)">Barba — R$15</option>
+          <option value="Sobrancelha (R$10)">Sobrancelha — R$10</option>
+          <option value="Pézinho (R$10)">Pézinho — R$10</option>
+          <option value="Pigmentação (R$10)">Pigmentação — R$10</option>
+        </select>
+      </div>
+
+      <div class="form__field">
+        <label for="dia">Dia desejado</label>
+        <input type="date" id="dia" name="dia" required>
+      </div>
+
+      <div class="form__field">
+        <label>Horário desejado</label>
+        <div class="slots" id="slotsGrid">
+          <p class="slots__hint">Escolha o dia para ver os horários disponíveis.</p>
+        </div>
+        <input type="hidden" id="horaSelecionada" name="hora" required>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--block">Confirmar agendamento</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>Edf. Clião Auroca, nº 57, Ladeira do Acupe</p>
+    <p>&copy; <span id="ano"></span> AM Studio Barbearia</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
