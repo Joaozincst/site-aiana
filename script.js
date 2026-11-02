@@ -1,4 +1,4 @@
-const WHATSAPP_NUMERO = "5571981017940";
+const WHATSAPP_NUMERO = "557192429476";
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyBtASWpYiwUQ-UK1ZWy1yTGiEW7Wh2J84g",
@@ -12,9 +12,19 @@ const FIREBASE_CONFIG = {
 firebase.initializeApp(FIREBASE_CONFIG);
 const db = firebase.firestore();
 
-const HORA_INICIO = "09:00";
-const HORA_FIM = "18:00";
 const INTERVALO_MINUTOS = 40;
+
+/* Horário de funcionamento por dia da semana (0 = domingo ... 6 = sábado).
+   null = fechado. */
+const HORARIOS_FUNCIONAMENTO = {
+  0: null,
+  1: null,
+  2: { inicio: "10:00", fim: "18:00" },
+  3: { inicio: "10:00", fim: "18:00" },
+  4: { inicio: "10:00", fim: "18:00" },
+  5: { inicio: "10:00", fim: "18:00" },
+  6: { inicio: "10:00", fim: "17:00" },
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   iniciarMenu();
@@ -55,9 +65,15 @@ function iniciarDataMinima() {
 }
 
 /* Grade de horários de 40 em 40 min */
-function gerarHorarios() {
-  const [horaIni, minIni] = HORA_INICIO.split(":").map(Number);
-  const [horaFim, minFim] = HORA_FIM.split(":").map(Number);
+function obterExpediente(dataISO) {
+  const [ano, mes, dia] = dataISO.split("-").map(Number);
+  const diaDaSemana = new Date(ano, mes - 1, dia).getDay();
+  return HORARIOS_FUNCIONAMENTO[diaDaSemana];
+}
+
+function gerarHorarios(expediente) {
+  const [horaIni, minIni] = expediente.inicio.split(":").map(Number);
+  const [horaFim, minFim] = expediente.fim.split(":").map(Number);
 
   const inicioMin = horaIni * 60 + minIni;
   const fimMin = horaFim * 60 + minFim;
@@ -91,6 +107,12 @@ async function renderizarHorarios(data) {
     return;
   }
 
+  const expediente = obterExpediente(data);
+  if (!expediente) {
+    grid.innerHTML = '<p class="slots__hint">Fechado neste dia. Atendemos de terça a sábado.</p>';
+    return;
+  }
+
   grid.innerHTML = '<p class="slots__hint">Carregando horários...</p>';
 
   let ocupados = [];
@@ -102,7 +124,7 @@ async function renderizarHorarios(data) {
     return;
   }
 
-  const todosHorarios = gerarHorarios();
+  const todosHorarios = gerarHorarios(expediente);
   grid.innerHTML = "";
 
   todosHorarios.forEach((horario) => {
